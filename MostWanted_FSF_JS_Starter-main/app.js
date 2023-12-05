@@ -39,8 +39,7 @@ function searchPeopleDataSet(people) {
 			results = searchByName(people);
 			break;
 		case 'trait':
-			//! TODO
-			// results = searchByTraits(people);
+			results = searchByTraits(people);
 			break;
 		default:
 			return searchPeopleDataSet(people);
@@ -144,4 +143,96 @@ function exitOrRestart(people) {
 			alert('Invalid input. Please try again.');
 			return exitOrRestart(people);
 	}
+}
+
+function searchByTraits(people) {
+	const traitToSearchFor = prompt("Select from the following traits: gender, height, weight, eye color, occupation");
+	let results;
+	traitsSearchResults = person.filter(function(el){
+	if (traitToSearchFor === "gender"){
+		return searchByGender(people);
+	}
+	else if(traitToSearchFor === "height"){
+		return searchByHeight(people);
+	}
+	else if(traitToSearchFor === "weight"){
+		return searchByWeight(people);
+	}
+	else if(traitToSearchFor === "eye color"){
+		return searchByEyeColor(people);
+	}
+	else if(traitToSearchFor === "occupation"){
+		return searchByOccupation(people);
+	}})
+	return traitsSearchResults;
+}
+
+function searchByGender(people){
+	let genderToSearchFor = prompt ("male or female?");
+	let results;
+	results = person.filter(function(el){
+		if(el.gender === genderToSearchFor){
+			return true;
+		}
+		else{
+			return false;
+		}
+	})
+	return results;
+}
+
+function searchByHeight(people){
+	let heightToSearchFor = prompt ("Please enter the height you are looking for.");
+	let results;
+	results = person.filter(function(el){
+		if(el.height === heightToSearchFor){
+			return true;
+		}
+		else{
+			return false;
+		}
+	})
+	return results;
+}
+
+function searchByWeight(people){
+	let weightToSearchFor = prompt ("Please enter the weight you are looking for.");
+	let results;
+	results = person.filter(function(el){
+		if(el.weight === weightToSearchFor){
+			return true;
+		}
+		else{
+			return false;
+		}
+	})
+	return results;
+}
+
+function searchByEyeColor(people){
+	let eyeColorToSearchFor = prompt ("Please enter an eye color.");
+	let results;
+	results = person.filter(function(el){
+		if(el.eyecolor === eyeColorToSearchFor){
+			return true;
+		}
+		else{
+			return false;
+		}
+	})
+	return results;
+}
+
+function searchByOccupation(people){
+	let occupationToSearchFor = prompt ("Please enter an occupation.");
+	let results;
+	results = person.filter(function(el){
+		if(el.occupation === occupationToSearchForToSearchFor){
+			return true;
+		}
+		else{
+			return false;
+		}
+	})
+	return results;
 }

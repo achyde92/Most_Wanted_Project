@@ -70,81 +70,6 @@ function searchByName(people) {
 	return fullNameSearchResults;
 }
 
-function mainMenu(person, people) {
-	const mainMenuUserActionChoice = validatedPrompt(
-		`Person: ${person.firstName} ${person.lastName}\n\nDo you want to know their full information, family, or descendants?`,
-		['info', 'family', 'descendants', 'quit'],
-	);
-
-	switch (mainMenuUserActionChoice) {
-		case 'info':
-			//! TODO
-			// displayPersonInfo(person);
-			break;
-		case 'family':
-			//! TODO
-			// let personFamily = findPersonFamily(person, people);
-			// displayPeople('Family', personFamily);
-			break;
-		case 'descendants':
-			//! TODO
-			// let personDescendants = findPersonDescendants(person, people);
-			// displayPeople('Descendants', personDescendants);
-			break;
-		case 'quit':
-			return;
-		default:
-			alert('Invalid input. Please try again.');
-	}
-
-	return mainMenu(person, people);
-}
-
-function displayPeople(displayTitle, peopleToDisplay) {
-	const formatedPeopleDisplayText = peopleToDisplay
-		.map((person) => `${person.firstName} ${person.lastName}`)
-		.join('\n');
-	alert(`${displayTitle}\n\n${formatedPeopleDisplayText}`);
-}
-
-function validatedPrompt(message, acceptableAnswers) {
-	acceptableAnswers = acceptableAnswers.map((aa) => aa.toLowerCase());
-
-	const builtPromptWithAcceptableAnswers = `${message} \nAcceptable Answers: ${acceptableAnswers
-		.map((aa) => `\n-> ${aa}`)
-		.join('')}`;
-
-	const userResponse = prompt(builtPromptWithAcceptableAnswers).toLowerCase();
-
-	if (acceptableAnswers.includes(userResponse)) {
-		return userResponse;
-	} else {
-		alert(
-			`"${userResponse}" is not an acceptable response. The acceptable responses include:\n${acceptableAnswers
-				.map((aa) => `\n-> ${aa}`)
-				.join('')} \n\nPlease try again.`,
-		);
-		return validatedPrompt(message, acceptableAnswers);
-	}
-}
-
-function exitOrRestart(people) {
-	const userExitOrRestartChoice = validatedPrompt('Would you like to exit or restart?', [
-		'exit',
-		'restart',
-	]);
-
-	switch (userExitOrRestartChoice) {
-		case 'exit':
-			return;
-		case 'restart':
-			return app(people);
-		default:
-			alert('Invalid input. Please try again.');
-			return exitOrRestart(people);
-	}
-}
-
 function searchByTraits(people) {
 	const traitToSearchFor = prompt("Select from the following traits: gender, height, weight, eye color, occupation");
 	let results;
@@ -236,3 +161,100 @@ function searchByOccupation(people){
 	})
 	return results;
 }
+
+function mainMenu(person, people) {
+	const mainMenuUserActionChoice = validatedPrompt(
+		`Person: ${person.firstName} ${person.lastName}\n\nDo you want to know their full information, family, or descendants?`,
+		['info', 'family', 'descendants', 'quit'],
+	);
+
+	switch (mainMenuUserActionChoice) {
+		case 'info':
+			displayPersonInfo(person);
+			break;
+		case 'family':
+			let personFamily = findPersonFamily(person, people);
+			displayPeople('Family', personFamily);
+			break;
+		case 'descendants':
+			// let personDescendants = findPersonDescendants(person, people);
+			// displayPeople('Descendants', personDescendants);
+			break;
+		case 'quit':
+			return;
+		default:
+			alert('Invalid input. Please try again.');
+	}
+
+	return mainMenu(person, people);
+}
+
+function displayPeople(displayTitle, peopleToDisplay) {
+	const formatedPeopleDisplayText = peopleToDisplay
+		.map((person) => `${person.firstName} ${person.lastName}`)
+		.join('\n');
+	alert(`${displayTitle}\n\n${formatedPeopleDisplayText}`);
+}
+
+function displayPersonInfo(person){
+	console.log("First Name:", person.firstName);
+	console.log("Last Name:", person.lastName);
+	console.log("Gender:", person.gender);
+	console.log("DOB:", person.dob);
+	console.log("Id:", person.id);
+	console.log("Height:", person.height);
+	console.log("Weight:", person.weight);
+	console.log("Eye Color:", person.eyecolor);
+	console.log("Occupation:", person.occupation);
+	
+	let personInfo = ""
+}
+function findPersonFamily(person, allPeople){
+	let spouse = allPeople.find(p => p.id === person.currentSpouse);
+	return{
+		spouse
+	}
+}
+
+function displayPeople(personFamily){
+	console.log("Spouse:", findPersonFamily.spouse)
+}
+
+function validatedPrompt(message, acceptableAnswers) {
+	acceptableAnswers = acceptableAnswers.map((aa) => aa.toLowerCase());
+
+	const builtPromptWithAcceptableAnswers = `${message} \nAcceptable Answers: ${acceptableAnswers
+		.map((aa) => `\n-> ${aa}`)
+		.join('')}`;
+
+	const userResponse = prompt(builtPromptWithAcceptableAnswers).toLowerCase();
+
+	if (acceptableAnswers.includes(userResponse)) {
+		return userResponse;
+	} else {
+		alert(
+			`"${userResponse}" is not an acceptable response. The acceptable responses include:\n${acceptableAnswers
+				.map((aa) => `\n-> ${aa}`)
+				.join('')} \n\nPlease try again.`,
+		);
+		return validatedPrompt(message, acceptableAnswers);
+	}
+}
+
+function exitOrRestart(people) {
+	const userExitOrRestartChoice = validatedPrompt('Would you like to exit or restart?', [
+		'exit',
+		'restart',
+	]);
+
+	switch (userExitOrRestartChoice) {
+		case 'exit':
+			return;
+		case 'restart':
+			return app(people);
+		default:
+			alert('Invalid input. Please try again.');
+			return exitOrRestart(people);
+	}
+}
+

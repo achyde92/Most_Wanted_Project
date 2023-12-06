@@ -72,94 +72,88 @@ function searchByName(people) {
 
 function searchByTraits(people) {
 	const traitToSearchFor = prompt("Select from the following traits: gender, height, weight, eye color, occupation");
-	let results;
-	traitsSearchResults = person.filter(function(el){
-	if (traitToSearchFor === "gender"){
-		return searchByGender(people);
-	}
-	else if(traitToSearchFor === "height"){
-		return searchByHeight(people);
-	}
-	else if(traitToSearchFor === "weight"){
-		return searchByWeight(people);
-	}
-	else if(traitToSearchFor === "eye color"){
-		return searchByEyeColor(people);
-	}
-	else if(traitToSearchFor === "occupation"){
-		return searchByOccupation(people);
-	}})
+	let traitsSearchResults;
+		if (traitToSearchFor === "gender") {
+			traitsSearchResults = searchByGender(people);
+		}
+		else if (traitToSearchFor === "height") {
+			traitsSearchResults = searchByHeight(people);
+		}
+		else if (traitToSearchFor === "weight") {
+			traitsSearchResults = earchByWeight(people);
+		}
+		else if (traitToSearchFor === "eye color") {
+			traitsSearchResults = searchByEyeColor(people);
+		}
+		else if (traitToSearchFor === "occupation") {
+			traitsSearchResults = searchByOccupation(people);
+		} 
 	return traitsSearchResults;
 }
 
-function searchByGender(people){
-	let genderToSearchFor = prompt ("male or female?");
-	let results;
-	results = person.filter(function(el){
-		if(el.gender === genderToSearchFor){
+function searchByGender(people) {
+	let genderToSearchFor = prompt("male or female?");
+	let genderResults = people.filter(function (el) {
+		if (el.gender === genderToSearchFor) {
 			return true;
 		}
-		else{
+		else {
 			return false;
 		}
 	})
-	return results;
+	return genderResults;
 }
 
-function searchByHeight(people){
-	let heightToSearchFor = prompt ("Please enter the height you are looking for.");
-	let results;
-	results = person.filter(function(el){
-		if(el.height === heightToSearchFor){
+function searchByHeight(people) {
+	let heightToSearchFor = prompt("Please enter the height you are looking for.");
+	let heightResults = people.filter(function (el) {
+		if (el.height === heightToSearchFor) {
 			return true;
 		}
-		else{
+		else {
 			return false;
 		}
 	})
-	return results;
+	return heightResults;
 }
 
-function searchByWeight(people){
-	let weightToSearchFor = prompt ("Please enter the weight you are looking for.");
-	let results;
-	results = person.filter(function(el){
-		if(el.weight === weightToSearchFor){
+function searchByWeight(people) {
+	let weightToSearchFor = prompt("Please enter the weight you are looking for.");
+	let weightResults = people.filter(function (el) {
+		if (el.weight === weightToSearchFor) {
 			return true;
 		}
-		else{
+		else {
 			return false;
 		}
 	})
-	return results;
+	return weightResults;
 }
 
-function searchByEyeColor(people){
-	let eyeColorToSearchFor = prompt ("Please enter an eye color.");
-	let results;
-	results = person.filter(function(el){
-		if(el.eyecolor === eyeColorToSearchFor){
+function searchByEyeColor(people) {
+	let eyeColorToSearchFor = prompt("Please enter an eye color.");
+	let eyeColorResults = people.filter(function (el) {
+		if (el.eyecolor === eyeColorToSearchFor) {
 			return true;
 		}
-		else{
+		else {
 			return false;
 		}
 	})
-	return results;
+	return eyeColorResults;
 }
 
-function searchByOccupation(people){
-	let occupationToSearchFor = prompt ("Please enter an occupation.");
-	let results;
-	results = person.filter(function(el){
-		if(el.occupation === occupationToSearchForToSearchFor){
+function searchByOccupation(people) {
+	let occupationToSearchFor = prompt("Please enter an occupation.");
+	let occupationResults = people.filter(function (el) {
+		if (el.occupation === occupationToSearchForToSearchFor) {
 			return true;
 		}
-		else{
+		else {
 			return false;
 		}
 	})
-	return results;
+	return occupationResults;
 }
 
 function mainMenu(person, people) {
@@ -177,8 +171,8 @@ function mainMenu(person, people) {
 			displayPeople('Family', personFamily);
 			break;
 		case 'descendants':
-			// let personDescendants = findPersonDescendants(person, people);
-			// displayPeople('Descendants', personDescendants);
+			let personDescendants = findPersonDescendants(person, people);
+			displayPeople('Descendants', personDescendants);
 			break;
 		case 'quit':
 			return;
@@ -196,7 +190,7 @@ function displayPeople(displayTitle, peopleToDisplay) {
 	alert(`${displayTitle}\n\n${formatedPeopleDisplayText}`);
 }
 
-function displayPersonInfo(person){
+function displayPersonInfo(person) {
 	console.log("First Name:", person.firstName);
 	console.log("Last Name:", person.lastName);
 	console.log("Gender:", person.gender);
@@ -206,18 +200,36 @@ function displayPersonInfo(person){
 	console.log("Weight:", person.weight);
 	console.log("Eye Color:", person.eyecolor);
 	console.log("Occupation:", person.occupation);
-	
-	let personInfo = ""
+
+	let personInfo = "First Name: " + person.firstName;
+	personInfo += "\nLast Name: " +person.lastName;
+	personInfo += "\nGender: " +person.gender;
+	personInfo += "\nDOB: " +person.dob;
+	personInfo += "\nId: " +person.id;
+	personInfo += "\nHeight: " +person.height;
+	personInfo += "\nWeight: " +person.weight;
+	personInfo += "\nEye Color: " +person.eyecolor;
+	personInfo += "\nOccupation: " +person.occupation;
+
+	alert(personInfo)
 }
-function findPersonFamily(person, allPeople){
+function findPersonFamily(person, allPeople) {
 	let spouse = allPeople.find(p => p.id === person.currentSpouse);
-	return{
-		spouse
-	}
+	let parents = allPeople.filter(p => p.id === person.parents[0]|| p.id === person.parents[1]);
+	let siblings = allPeople.filter(p => p.parents && p.parents.includes(person.id) && p.id !== person.id)
+	console.log("Spouse: " , spouse);
+	console.log("Parents: ", parents);
+	console.log("Siblings: ", siblings);
+	return spouse, parents, siblings
 }
 
-function displayPeople(personFamily){
-	console.log("Spouse:", personFamily.spouse)
+function findPersonDescendants(person, allPeople) {
+	let descendants = allPeople.find(p => p.id === person.parents);
+	return descendants
+}
+
+function displayDescendants(personDescendants) {
+	console.log("Parent of:", personDescendants.parents)
 }
 
 function validatedPrompt(message, acceptableAnswers) {

@@ -217,7 +217,7 @@ function findPersonFamily(person, allPeople){
 }
 
 function displayPeople(personFamily){
-	console.log("Spouse:", findPersonFamily.spouse)
+	console.log("Spouse:", personFamily.spouse)
 }
 
 function validatedPrompt(message, acceptableAnswers) {
